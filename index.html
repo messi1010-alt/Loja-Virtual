@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="h-full bg-slate-50">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NUVORA | E-Commerce Multimarcas Profissional</title>
+    
+    <!-- SEO e Social Share -->
+    <meta name="description" content="NUVORA - Sua plataforma multimarcas de comércio eletrônico com perfumes importados, cosméticos, moda e eletrônicos.">
+    <meta name="theme-color" content="#2563eb">
+    <meta property="og:title" content="NUVORA | E-Commerce Multimarcas Profissional">
+    <meta property="og:description" content="Encontre perfumes, cosméticos, camisas de futebol e eletrônicos com entrega monitorada.">
+    <meta property="og:type" content="website">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: 'var(--color-brand-50, #eff6ff)',
+                            100: 'var(--color-brand-100, #dbeafe)',
+                            400: 'var(--color-brand-400, #60a5fa)',
+                            500: 'var(--color-brand-500, #3b82f6)',
+                            600: 'var(--color-brand-600, #2563eb)',
+                            700: 'var(--color-brand-700, #1d4ed8)',
+                            900: 'var(--color-brand-900, #1e3a8a)',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="h-full flex flex-col text-slate-800 dark:text-slate-100 dark:bg-slate-950 transition-colors duration-300 antialiased selection:bg-brand-500 selection:text-white">
+
+    <!-- ANNOUNCEMENT BAR -->
+    <div class="bg-slate-900 text-white text-xs py-2 px-4 text-center font-medium flex justify-between items-center sm:justify-center gap-4 border-b border-slate-800">
+        <span id="announcement-text" class="truncate transition-all duration-500">🚀 Frete Grátis acima de R$ 299 com o cupom <strong class="text-amber-400">NUVORA10</strong></span>
+        
+        <button onclick="openLoginModal()" aria-label="Abrir modal de login e área do administrador" class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs px-2.5 py-1 rounded-lg border border-slate-700 transition flex items-center gap-1.5 shrink-0">
+            <i data-lucide="shield-check" class="w-3.5 h-3.5 text-amber-400"></i>
+            <span>Entrar / Admin</span>
+        </button>
+    </div>
+
+    <!-- MAIN HEADER -->
+    <header class="sticky top-0 z-40 glass-header border-b border-slate-200 dark:border-slate-800 shadow-sm transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 gap-4">
+                
+                <div class="flex items-center gap-3">
+                    <button onclick="toggleMobileMenu()" aria-label="Abrir menu de navegação móvel" class="md:hidden p-2 text-slate-600 dark:text-slate-300 hover:text-slate-900 rounded-lg">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                    <a href="#home" onclick="navigateTo('home')" class="flex items-center gap-2 group">
+                        <div class="bg-brand-600 text-white p-2 rounded-xl shadow-md shadow-brand-500/20 group-hover:bg-brand-700 transition">
+                            <i data-lucide="sparkles" class="w-5 h-5"></i>
+                        </div>
+                        <span class="font-extrabold text-xl tracking-tight text-slate-900 dark:text-white">NUV<span class="text-brand-600">ORA</span></span>
+                    </a>
+                </div>
+
+                <!-- Desktop Search Bar & Suggestions -->
+                <div class="hidden md:flex flex-1 max-w-md mx-4 relative">
+                    <input type="text" id="desktop-search" oninput="handleSearchInput(this.value)" onfocus="handleSearchInput(this.value)" placeholder="Buscar marcas, perfumes, roupas ou cosméticos..." class="w-full bg-slate-100 dark:bg-slate-800 border-0 focus:ring-2 focus:ring-brand-600 text-slate-800 dark:text-slate-100 placeholder-slate-400 text-xs font-medium rounded-full py-2.5 pl-10 pr-4 transition">
+                    <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-3 text-slate-400"></i>
+                    
+                    <div id="search-suggestions" class="absolute left-0 right-0 top-full mt-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl p-3 hidden z-50 max-h-80 overflow-y-auto"></div>
+                </div>
+
+                <!-- Navigation Controls -->
+                <div class="flex items-center gap-2 sm:gap-3">
+                    <nav class="hidden xl:flex items-center gap-5 text-xs font-semibold text-slate-600 dark:text-slate-300 mr-2">
+                        <a href="#home" onclick="navigateTo('home')" class="hover:text-brand-600 transition">Início</a>
+                        <a href="#catalog" onclick="navigateTo('catalog')" class="hover:text-brand-600 transition">Catálogo</a>
+                    </nav>
+
+                    <!-- WISHLIST -->
+                    <button onclick="navigateTo('wishlist')" aria-label="Ver meus favoritos" title="Meus Favoritos" class="p-2 text-slate-700 dark:text-slate-200 hover:text-rose-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition relative">
+                        <i data-lucide="heart" class="w-5 h-5"></i>
+                        <span id="wishlist-count-badge" class="absolute top-1 right-1 bg-rose-500 text-white text-[10px] font-extrabold w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
+                    </button>
+
+                    <!-- COMPARE -->
+                    <button onclick="openCompareModal()" aria-label="Abrir comparador de produtos" title="Comparador" class="p-2 text-slate-700 dark:text-slate-200 hover:text-brand-600 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition relative">
+                        <i data-lucide="arrow-left-right" class="w-5 h-5"></i>
+                        <span id="compare-count-badge" class="absolute top-1 right-1 bg-brand-600 text-white text-[10px] font-extrabold w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
+                    </button>
+
+                    <!-- THEME SELECTOR -->
+                    <div class="relative group">
+                        <button aria-label="Selecionar paleta de cores e tema" class="p-2 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition flex items-center gap-1" title="Alterar Tema">
+                            <i data-lucide="palette" class="w-5 h-5 text-brand-600"></i>
+                        </button>
+                        <div class="absolute right-0 top-full mt-2 w-48 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl p-2 hidden group-hover:block z-50">
+                            <div class="text-[10px] font-bold text-slate-400 px-3 py-1 uppercase">Paletas</div>
+                            <button onclick="setTheme('default')" class="w-full text-left px-3 py-2 rounded-xl text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center gap-2">
+                                <span class="w-3 h-3 rounded-full bg-blue-600 inline-block"></span> Azul Padrão
+                            </button>
+                            <button onclick="setTheme('green')" class="w-full text-left px-3 py-2 rounded-xl text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center gap-2">
+                                <span class="w-3 h-3 rounded-full bg-emerald-600 inline-block"></span> Verde Esmeralda
+                            </button>
+                            <button onclick="setTheme('purple')" class="w-full text-left px-3 py-2 rounded-xl text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center gap-2">
+                                <span class="w-3 h-3 rounded-full bg-purple-600 inline-block"></span> Roxo Violeta
+                            </button>
+                            <button onclick="setTheme('dark')" class="w-full text-left px-3 py-2 rounded-xl text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center gap-2">
+                                <span class="w-3 h-3 rounded-full bg-slate-900 border inline-block"></span> Dark Mode
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- ORDERS -->
+                    <button onclick="navigateTo('orders')" aria-label="Ver meus pedidos e rastreamento" title="Meus Pedidos" class="p-2 text-slate-700 dark:text-slate-200 hover:text-brand-600 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition">
+                        <i data-lucide="package" class="w-5 h-5"></i>
+                    </button>
+
+                    <!-- CART -->
+                    <button onclick="navigateTo('cart')" aria-label="Ver carrinho de compras" title="Carrinho" class="p-2 text-slate-700 dark:text-slate-200 hover:text-brand-600 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition relative">
+                        <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+                        <span id="cart-count-badge" class="absolute top-1 right-1 bg-brand-600 text-white text-[10px] font-extrabold w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="pb-3 md:hidden">
+                <div class="relative">
+                    <input type="text" id="mobile-search" oninput="handleSearch(this.value)" placeholder="Buscar produtos..." class="w-full bg-slate-100 dark:bg-slate-800 border-0 focus:ring-2 focus:ring-brand-600 text-slate-800 dark:text-slate-100 placeholder-slate-400 text-xs font-medium rounded-lg py-2 pl-9 pr-4">
+                    <i data-lucide="search" class="w-4 h-4 absolute left-3 top-2.5 text-slate-400"></i>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-4 space-y-2">
+            <a href="#home" onclick="navigateTo('home'); toggleMobileMenu()" class="block py-2 text-slate-700 dark:text-slate-200 font-medium">Início</a>
+            <a href="#catalog" onclick="navigateTo('catalog'); toggleMobileMenu()" class="block py-2 text-slate-700 dark:text-slate-200 font-medium">Catálogo</a>
+            <a href="#wishlist" onclick="navigateTo('wishlist'); toggleMobileMenu()" class="block py-2 text-slate-700 dark:text-slate-200 font-medium">Favoritos</a>
+            <a href="#orders" onclick="navigateTo('orders'); toggleMobileMenu()" class="block py-2 text-slate-700 dark:text-slate-200 font-medium">Meus Pedidos</a>
+            <button onclick="openLoginModal(); toggleMobileMenu()" class="block w-full text-left py-2 text-amber-600 font-semibold">Área do Administrador</button>
+        </div>
+    </header>
+
+    <!-- MODALS -->
+    <div id="size-guide-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 max-w-md w-full p-6 space-y-4">
+            <div class="flex items-center justify-between border-b pb-3 border-slate-100 dark:border-slate-800">
+                <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                    <i data-lucide="ruler" class="w-4 h-4 text-brand-600"></i> Guia de Tamanhos
+                </h3>
+                <button onclick="closeSizeGuideModal()" aria-label="Fechar guia de tamanhos" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-4 h-4"></i></button>
+            </div>
+            <div class="overflow-x-auto text-xs">
+                <table class="w-full text-center border-collapse">
+                    <thead class="bg-slate-100 dark:bg-slate-800 font-bold">
+                        <tr><th class="p-2 border">Tam</th><th class="p-2 border">Tórax/Busto</th><th class="p-2 border">Cintura</th></tr>
+                    </thead>
+                    <tbody class="divide-y text-slate-600 dark:text-slate-300">
+                        <tr><td class="p-2 border font-bold">P</td><td class="p-2 border">84-90 cm</td><td class="p-2 border">68-74 cm</td></tr>
+                        <tr><td class="p-2 border font-bold">M</td><td class="p-2 border">91-98 cm</td><td class="p-2 border">75-82 cm</td></tr>
+                        <tr><td class="p-2 border font-bold">G</td><td class="p-2 border">99-106 cm</td><td class="p-2 border">83-90 cm</td></tr>
+                        <tr><td class="p-2 border font-bold">GG</td><td class="p-2 border">107-115 cm</td><td class="p-2 border">91-99 cm</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="compare-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 max-w-4xl w-full max-h-[90vh] overflow-y-auto p-6 space-y-6">
+            <div class="flex items-center justify-between border-b pb-4 border-slate-100 dark:border-slate-800">
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                    <i data-lucide="arrow-left-right" class="w-5 h-5 text-brand-600"></i> Comparador
+                </h3>
+                <button onclick="closeCompareModal()" aria-label="Fechar comparador de produtos" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+            <div id="compare-content" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+        </div>
+    </div>
+
+    <div id="login-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 max-w-sm w-full p-6 space-y-4 shadow-2xl">
+            <div class="flex items-center justify-between border-b pb-3 border-slate-100 dark:border-slate-800">
+                <h3 class="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                    <i data-lucide="lock" class="w-4 h-4 text-brand-600"></i> Autenticação Admin
+                </h3>
+                <button onclick="closeLoginModal()" aria-label="Fechar modal de login" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-4 h-4"></i></button>
+            </div>
+            <form onsubmit="handleLogin(event)" class="space-y-3">
+                <div>
+                    <label class="text-[11px] font-bold text-slate-500">E-mail</label>
+                    <input type="email" id="login-email" required value="admin@nuvora.com" class="w-full bg-slate-100 dark:bg-slate-800 border-0 p-3 rounded-xl text-xs mt-1">
+                </div>
+                <div>
+                    <label class="text-[11px] font-bold text-slate-500">Senha</label>
+                    <input type="password" id="login-pass" required value="admin123" class="w-full bg-slate-100 dark:bg-slate-800 border-0 p-3 rounded-xl text-xs mt-1">
+                </div>
+                <div class="bg-amber-50 dark:bg-slate-800/60 p-3 rounded-xl border border-amber-200/50 text-[10px] text-amber-800 dark:text-amber-300">
+                    💡 Padrão Admin: <strong>admin@nuvora.com</strong> / <strong>admin123</strong>
+                </div>
+                <button type="submit" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs py-3 rounded-xl shadow transition">Entrar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MAIN VIEW CONTAINER -->
+    <main id="app-container" class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6"></main>
+
+    <!-- TOAST -->
+    <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+        <div class="bg-slate-900 text-white px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-3 border border-slate-700">
+            <i data-lucide="check-circle" class="w-5 h-5 text-emerald-400"></i>
+            <span id="toast-message" class="text-xs font-semibold">Sucesso!</span>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-slate-400 text-xs mt-auto border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="space-y-3">
+                <span class="font-extrabold text-lg text-white">NUV<span class="text-brand-500">ORA</span></span>
+                <p class="text-slate-400 text-[11px] leading-relaxed">Sua plataforma multimarcas de comércio eletrônico com perfumes importados, cosméticos, moda e eletrônicos.</p>
+            </div>
+            <div>
+                <h4 class="font-bold text-white mb-3 text-xs uppercase">Departamentos</h4>
+                <ul class="space-y-2 text-[11px]">
+                    <li><a href="javascript:void(0)" onclick="filterByCategory('Perfumes')" class="hover:text-white transition">Perfumes</a></li>
+                    <li><a href="javascript:void(0)" onclick="filterByCategory('Cosméticos')" class="hover:text-white transition">Cosméticos</a></li>
+                    <li><a href="javascript:void(0)" onclick="filterByCategory('Vestuário')" class="hover:text-white transition">Moda & Futebol</a></li>
+                    <li><a href="javascript:void(0)" onclick="filterByCategory('Eletrônicos')" class="hover:text-white transition">Eletrônicos</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-white mb-3 text-xs uppercase">Ajuda</h4>
+                <ul class="space-y-2 text-[11px]">
+                    <li>Central de Atendimento</li>
+                    <li>Meus Pedidos</li>
+                    <li>Trocas e Devoluções</li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-white mb-3 text-xs uppercase">Pagamento</h4>
+                <div class="flex flex-wrap gap-2 text-[10px]">
+                    <span class="bg-slate-800 px-2 py-1 rounded text-slate-300">PIX Instantâneo</span>
+                    <span class="bg-slate-800 px-2 py-1 rounded text-slate-300">Cartão de Crédito</span>
+                </div>
+            </div>
+        </div>
+        <div class="border-t border-slate-800 text-center py-4 text-[10px] text-slate-500">
+            &copy; 2026 NUVORA. Todos os direitos reservados.
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
